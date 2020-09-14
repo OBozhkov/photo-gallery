@@ -1,19 +1,52 @@
 <template>
   <div>
+    <nav>
+      <a v-if="user" @click="signout">signouttt</a>
+
+      <template v-else>
+        <nuxt-link to="/signin">signIn</nuxt-link>
+        <nuxt-link to="/signup">signUp</nuxt-link>
+      </template>
+    </nav>
     <Nuxt />
   </div>
 </template>
 
+<script>
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+export default {
+  name: 'signup',
+  data() {
+    return {
+      user: ''
+    };
+  },
+  mounted() {
+    firebase.auth().onAuthStateChanged((user) => {
+      console.log(user);
+
+      this.user = user;
+    });
+  },
+  methods: {
+    signout() {
+      firebase
+        .auth()
+        .signOut()
+        .then((result) => {
+          console.log(result);
+          this.user = '';
+          this.$router.push('/');
+        });
+    }
+  }
+};
+</script>
+
 <style>
 html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     sans-serif;
   font-size: 16px;
   word-spacing: 1px;

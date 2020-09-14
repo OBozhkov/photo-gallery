@@ -1,4 +1,8 @@
-<template> </template>
+<template>
+	<container>
+		<h1>hello user</h1>
+	</container>
+</template>
 
 <script>
 export default {

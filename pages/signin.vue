@@ -3,7 +3,7 @@
 		<div class="d-flex flex-row justify-content-center">
 			<div class="col-md-8">
 				<div class="card">
-					<h1>sign in</h1>
+					<h1>Sign In</h1>
 
 					<form @submit.prevent="onSubmit">
 						<input type="text" placeholder="email" v-model="email" />
@@ -22,23 +22,24 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 export default {
-	name: 'signin',
+	name: 'signup',
 
 	data() {
 		return {
 			email: '',
-			password: ''
+			password: '',
+			errors: ''
 		};
 	},
 	methods: {
 		onSubmit() {
-			console.log('submited');
 			firebase
 				.auth()
-				.createUserWithEmailAndPassword(this.email, this.password)
+				.signInWithEmailAndPassword(this.email, this.password)
 				.then((user) => {
 					console.log(user);
-					this.$router.push('');
+					console.log('user-log');
+					this.$router.push('/account');
 				})
 				.catch((error) => {
 					this.errors = error;
